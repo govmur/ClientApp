@@ -1,0 +1,19 @@
+steps:
+
+# Step 0: FRONTEND npm install
+- name: "gcr.io/cloud-builders/npm"
+  dir: 'frontend'
+  args: ['install']  
+
+# Step 1: FRONTEND optimized build
+- name: "gcr.io/cloud-builders/npm"
+  dir: 'frontend'
+  args: ["run", "build"]
+
+# Step 2: FRONTEND Deploy cloud app frontend
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy", "-v", "0-1-2", "app.yaml"]
+  dir: 'frontend'
+  timeout: "20m"
+
+timeout: 60m
